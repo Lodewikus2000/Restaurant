@@ -19,15 +19,16 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        // Get the category the user clicked on.
         Intent intent = getIntent();
         category = intent.getStringExtra("category");
+
+        setTitle(category);
 
         MenuRequest request = new MenuRequest(this);
         request.getMenuItems(this, category);
 
-        setTitle(category);
     }
-
 
 
     @Override
@@ -46,11 +47,9 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
 
     @Override
     public void gotMenuItemsError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        Toast.makeText(this, "errormessage here", Toast.LENGTH_LONG).show();
-
-
+        Toast.makeText(this, "Could not find menu", Toast.LENGTH_LONG).show();
     }
+
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
@@ -64,9 +63,5 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
 
             startActivity(intent);
         }
-
     }
-
-
-
 }

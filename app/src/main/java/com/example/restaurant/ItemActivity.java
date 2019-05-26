@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
+import java.text.NumberFormat;
 
 public class ItemActivity extends AppCompatActivity {
 
@@ -14,27 +16,29 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+        // Get the item the user clicked on.
         Intent intent = getIntent();
         menuItem = (MenuItem) intent.getSerializableExtra("menuItem");
 
-        TextView nameView = findViewById(R.id.textViewName);
-        TextView descriptionView = findViewById(R.id.textViewDescription);
-        TextView priceView = findViewById(R.id.textViewPrice);
-        ImageView imageView = findViewById(R.id.imageView);
-
-
-        Float price = menuItem.getPrice();
-
-        nameView.setText(menuItem.getName());
-        descriptionView.setText(menuItem.getDescription());
-        priceView.setText(menuItem.getPrice().toString() + " €");
 
         setTitle(menuItem.getCategory());
 
 
+        TextView nameView = findViewById(R.id.textViewName);
+        nameView.setText(menuItem.getName());
 
 
-        new DownloadImageFromInternet(imageView)
-                .execute(menuItem.getImageURL());
+        TextView descriptionView = findViewById(R.id.textViewDescription);
+        descriptionView.setText(menuItem.getDescription());
+
+
+        TextView priceView = findViewById(R.id.textViewPrice);
+        priceView.setText(NumberFormat.getCurrencyInstance().format(menuItem.getPrice()));
+
+
+        ImageView imageView = findViewById(R.id.imageView);
+        String imageUri = menuItem.getImageURL();
+        Picasso.with(this).load(imageUri).into(imageView);
+
     }
 }

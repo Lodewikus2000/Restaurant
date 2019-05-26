@@ -3,7 +3,6 @@ package com.example.restaurant;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,11 +21,9 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
         CategoriesRequest request = new CategoriesRequest(this);
         request.getCategories(this);
-        Toast.makeText(this,"Started", Toast.LENGTH_SHORT).show();
-
-
 
     }
 
@@ -47,11 +44,9 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
 
     @Override
     public void gotCategoriesError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        Toast.makeText(this, "errormessage here", Toast.LENGTH_LONG).show();
-
-
+        Toast.makeText(this, "Could not find categories", Toast.LENGTH_LONG).show();
     }
+
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override

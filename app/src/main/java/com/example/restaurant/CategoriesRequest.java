@@ -1,14 +1,14 @@
 package com.example.restaurant;
 
-import android.app.Activity;
+
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,11 +27,9 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
     }
 
 
-    // Constructor
     public CategoriesRequest(Context aContext) {
         context = aContext;
     }
-
 
 
     @Override
@@ -48,15 +46,17 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
 
         try {
 
+            // New empty ArrayList of strings that will be filled with categories.
             ArrayList<String> categories = new ArrayList<String>();
 
-            JSONArray categoriesArray = (JSONArray) response.getJSONArray("categories");
+
+            // Get the JSONArray from the response.
+            JSONArray categoriesArray = response.getJSONArray("categories");
 
 
             for (int i = 0; i < categoriesArray.length(); i++) {
-                String category = null;
 
-                category = categoriesArray.getString(i);
+                String category = categoriesArray.getString(i);
 
                 categories.add(category);
             }
@@ -66,9 +66,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         } catch (JSONException exception) {
             exception.printStackTrace();
         }
-
     }
-
 
 
     public void getCategories(Callback activity) {
@@ -77,7 +75,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        // The API delivers its data as a Json.
+        // The API delivers the data as a Json.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/categories", null, this, this);
         queue.add(jsonObjectRequest);
 

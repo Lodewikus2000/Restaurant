@@ -11,7 +11,6 @@ public class MenuItem implements Serializable {
     private String category;
 
 
-    // constructor
     public MenuItem(String name, String description, String imageURL, float price, String category) {
         this.name = name;
         this.description = description;
